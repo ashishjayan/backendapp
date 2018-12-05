@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "server": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/ashishjayan/backendapp/issues"
   },
-  "homepage": "https://github.com/ashishjayan/backendapp#readme"
+  "homepage": "https://github.com/ashishjayan/backendapp#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "unirest": "^0.5.1"
+  }
 }
