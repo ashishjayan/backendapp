@@ -20,6 +20,8 @@
   "homepage": "https://github.com/ashishjayan/backendapp#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "firebase-admin": "^6.3.0",
+    "firebase-functions": "^2.1.0",
     "unirest": "^0.5.1"
   }
 }
