@@ -1,4 +1,3 @@
-// dependencies
 "use strict";
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -11,6 +10,7 @@ var port = process.env.PORT || 8080;
 // create serve and configure it.
 const server = express();
 server.use(bodyParser.json());
+
 server.post("/getMovies", function(request, response) {
   if (request.body.result.parameters["top-rated"]) {
     var req = unirest("GET", "https://api.themoviedb.org/3/movie/top_rated");
@@ -127,7 +127,8 @@ server.post("/getMovies", function(request, response) {
     });
   }
 });
-server.get("/getName", function(req, res) {
+server.post("/getName", function(req, res) {
+  console.log(req.body, "hello");
   res.send("Swarup Bam");
 });
 server.listen(port, function() {
