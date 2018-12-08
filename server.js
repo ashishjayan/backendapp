@@ -130,8 +130,8 @@ server.post("/getMovies", function(request, response) {
 server.post("/getName", function(req, res) {
   console.log(req.body, "hello", req.body.displayName);
   let course = req.body.displayName;
-  response.setHeader("Content-Type", "application/json");
-  response.send(
+  res.setHeader("Content-Type", "application/json");
+  res.send(
     JSON.stringify({
       speech: "You are cool Farhat",
       displayText: `The returned course is called ${course}`
