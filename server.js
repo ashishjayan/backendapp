@@ -133,8 +133,7 @@ server.post("/getName", function(req, res) {
   res.setHeader("Content-Type", "application/json");
   res.send(
     JSON.stringify({
-      speech: "You are cool Farhat",
-      displayText: `The returned course is called ${course}`
+      displfullfillmentText: `The returned course is called ${course}`
     })
   );
 });
