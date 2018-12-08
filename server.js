@@ -128,8 +128,15 @@ server.post("/getMovies", function(request, response) {
   }
 });
 server.post("/getName", function(req, res) {
-  console.log(req.body, "hello");
-  res.send("Swarup Bam");
+  console.log(req.body, "hello", req.body.displayName);
+  let course = req.body.displayName;
+  response.setHeader("Content-Type", "application/json");
+  response.send(
+    JSON.stringify({
+      speech: "You are cool Farhat",
+      displayText: `The returned course is called ${course}`
+    })
+  );
 });
 server.listen(port, function() {
   console.log("Server is up and running...");
