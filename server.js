@@ -24,6 +24,7 @@ con.connect(function(err) {
 });
 
 app.post("/webhook", (req, res) => {
+  console.log(req.body);
   con.query("SELECT * FROM company.employee", function(err, result, fields) {
     if (err) throw err;
     var myresult = result;
