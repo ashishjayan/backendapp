@@ -19,9 +19,12 @@
   },
   "homepage": "https://github.com/ashishjayan/backendapp#readme",
   "dependencies": {
+    "actions-on-google": "^2.5.0",
     "express": "^4.16.4",
     "firebase-admin": "^6.3.0",
     "firebase-functions": "^2.1.0",
+    "mysql2": "^1.6.4",
+    "ngrok": "^3.1.0",
     "unirest": "^0.5.1"
   }
 }

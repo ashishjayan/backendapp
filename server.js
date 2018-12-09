@@ -1,142 +1,63 @@
-"use strict";
-const express = require("express");
-const bodyParser = require("body-parser");
-const http = require("https");
-var unirest = require("unirest");
-let errorResposne = {
-  results: []
-};
-var port = process.env.PORT || 8080;
-// create serve and configure it.
-const server = express();
-server.use(bodyParser.json());
+var request = require("request");
+var express = require("express");
+var bodyparser = require("body-parser");
+const { dialogflow } = require("actions-on-google");
+var app = express();
+const mysql = require("mysql2");
+//
 
-server.post("/getMovies", function(request, response) {
-  if (request.body.result.parameters["top-rated"]) {
-    var req = unirest("GET", "https://api.themoviedb.org/3/movie/top_rated");
-    req.query({
-      page: "1",
-      language: "en-US",
-      api_key: ""
-    });
-    req.send("{}");
-    req.end(function(res) {
-      if (res.error) {
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: "Error. Can you try it again ? ",
-            displayText: "Error. Can you try it again ? "
-          })
-        );
-      } else if (res.body.results.length > 0) {
-        let result = res.body.results;
-        let output = "";
-        for (let i = 0; i < result.length; i++) {
-          output += result[i].title;
-          output += "\n";
-        }
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: output,
-            displayText: output
-          })
-        );
-      }
-    });
-  } else if (request.body.result.parameters["movie-name"]) {
-    //   console.log('popular-movies param found');
-    let movie = request.body.result.parameters["movie-name"];
-    var req = unirest("GET", "https://api.themoviedb.org/3/search/movie");
-    req.query({
-      include_adult: "false",
-      page: "1",
-      query: movie,
-      language: "en-US",
-      api_key: ""
-    });
-    req.send("{}");
-    req.end(function(res) {
-      if (res.error) {
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: "Error. Can you try it again ? ",
-            displayText: "Error. Can you try it again ? "
-          })
-        );
-      } else if (res.body.results.length > 0) {
-        let result = res.body.results[0];
-        let output =
-          "Average Rating : " +
-          result.vote_average +
-          "\n Plot : " +
-          result.overview +
-          "url" +
-          result.poster_path;
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: output,
-            displayText: output
-          })
-        );
-      } else {
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: "Couldn't find any deatails. :(  ",
-            displayText: "Couldn't find any deatails. :(  "
-          })
-        );
-      }
-    });
-  } else if (request.body.result.parameters["popular-movies"]) {
-    var req = unirest("GET", "https://api.themoviedb.org/3/movie/popular");
-    req.query({
-      page: "1",
-      language: "en-US",
-      api_key: ""
-    });
-    req.send("{}");
-    req.end(function(res) {
-      if (res.error) {
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: "Error. Can you try it again ? ",
-            displayText: "Error. Can you try it again ? "
-          })
-        );
-      } else {
-        let result = res.body.results;
-        let output = "";
-        for (let i = 0; i < result.length; i++) {
-          output += result[i].title;
-          output += "\n";
-        }
-        response.setHeader("Content-Type", "application/json");
-        response.send(
-          JSON.stringify({
-            speech: output,
-            displayText: output
-          })
-        );
-      }
-    });
-  }
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
+app.set("port", process.env.PORT || 5000);
+
+var con = mysql.createConnection({
+  host: "35.193.222.192",
+  port: 3306,
+  user: "root",
+  password: "omariscool",
+  database: "taskdb"
 });
-server.post("/getName", function(req, res) {
-  console.log(req.body, "hello", req.body.displayName);
-  let course = req.body.displayName;
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+app.post("/webhook", (req, res) => {
+  con.query("SELECT * FROM company.employee", function(err, result, fields) {
+    if (err) throw err;
+    var myresult = result;
+    return res.json({
+      speech: "luces apagadas",
+      displayText: result,
+      source: "webhook-echo-sample"
+    });
+  });
+
+  console.log("Send the code my way bro!");
+  if (!req.body) return res.sendStatus(400);
+
   res.setHeader("Content-Type", "application/json");
-  res.send(
-    JSON.stringify({
-      displfullfillmentText: `The returned course is called ${course}`
-    })
-  );
+
+  console.log(req.body);
+  return res.json({
+    speech: "luces apagadas",
+    displayText: "luces apagadas",
+    source: "webhook-echo-sample"
+  });
 });
-server.listen(port, function() {
-  console.log("Server is up and running...");
+
+app.get("/student-grade", async (req, res) => {
+  const className = req.query.className;
+  const studentNumber = await con
+    .promise()
+    .query(
+      `select StudentNum from Student where FirstName = "Ananda" and LastName = "Poudel"`
+    );
+  console.log(studentNumber[0]);
+  res.json(studentNumber[0][0]);
+});
+
+app.listen(app.get("port"), () => {
+  console.log("Express server started on port", app.get("port"));
 });
