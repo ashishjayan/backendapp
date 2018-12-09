@@ -24,27 +24,18 @@ con.connect(function(err) {
 });
 
 app.post("/webhook", (req, res) => {
-  // con.query("SELECT * FROM company.employee", function(err, result, fields) {
-  //   if (err) throw err;
-  //   var myresult = result;
-  //   return res.json({
-  //     speech: "luces apagadas",
-  //     displayText: result,
-  //     source: "webhook-echo-sample"
-  //   });
-  // });
-
   console.log("Send the code my way bro!");
   if (!req.body) return res.sendStatus(400);
 
   res.setHeader("Content-Type", "application/json");
 
-  console.log(req.body.result.metadata.intentName);
-  return res.json({
-    speech: "luces apagadas",
-    displayText: "luces apagadas",
-    source: "webhook-echo-sample"
-  });
+  var intentName = req.body.result.metadata.intentName;
+  if (intentName === "getGradeForCLass")
+    return res.json({
+      speech: "luces apagadas",
+      displayText: "luces apagadas",
+      source: "webhook-echo-sample"
+    });
 });
 
 app.get("/student-grade", async (req, res) => {
