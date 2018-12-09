@@ -58,6 +58,4 @@ app.listen(app.get("port"), () => {
   console.log("Express server started on port", app.get("port"));
 });
 
-git add . 
-git commit -m "Helo"
-git push
+s
