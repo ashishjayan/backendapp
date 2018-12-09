@@ -24,16 +24,15 @@ con.connect(function(err) {
 });
 
 app.post("/webhook", (req, res) => {
-  console.log(req.body);
-  con.query("SELECT * FROM company.employee", function(err, result, fields) {
-    if (err) throw err;
-    var myresult = result;
-    return res.json({
-      speech: "luces apagadas",
-      displayText: result,
-      source: "webhook-echo-sample"
-    });
-  });
+  // con.query("SELECT * FROM company.employee", function(err, result, fields) {
+  //   if (err) throw err;
+  //   var myresult = result;
+  //   return res.json({
+  //     speech: "luces apagadas",
+  //     displayText: result,
+  //     source: "webhook-echo-sample"
+  //   });
+  // });
 
   console.log("Send the code my way bro!");
   if (!req.body) return res.sendStatus(400);
