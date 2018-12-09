@@ -28,15 +28,19 @@ app.post("/webhook", (req, res) => {
   if (!req.body) return res.sendStatus(400);
 
   res.setHeader("Content-Type", "application/json");
-  console.log(req.body);
-  var intentName = req.body.result.metadata.intentName;
-  if (intentName == "getGradeForCLass") {
-    return res.json({
-      speech: "luces apagadas",
-      displayText: "luces apagadas",
-      source: "webhook-echo-sample"
-    });
-  }
+  console.log(req.body.result);
+  // var intentName = req.body.result.metadata;
+  // if (intentName == "getGradeForCLass") {
+  //   return res.json({
+  //     speech: "luces apagadas",
+  //     displayText: "luces apagadas",
+  //     source: "webhook-echo-sample"
+  //   });
+  // }
+  return res.json({
+    speech: "luces apagadas",
+    displayText: "luces apagadas",
+    source: "webhook-echo-sample"
 });
 
 app.get("/student-grade", async (req, res) => {
