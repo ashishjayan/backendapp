@@ -29,18 +29,12 @@ app.post("/webhook", (req, res) => {
 
   res.setHeader("Content-Type", "application/json");
   console.log(req.body.result);
-  // var intentName = req.body.result.metadata;
-  // if (intentName == "getGradeForCLass") {
-  //   return res.json({
-  //     speech: "luces apagadas",
-  //     displayText: "luces apagadas",
-  //     source: "webhook-echo-sample"
-  //   });
-  // }
+
   return res.json({
     speech: "luces apagadas",
     displayText: "luces apagadas",
     source: "webhook-echo-sample"
+  });
 });
 
 app.get("/student-grade", async (req, res) => {
@@ -57,4 +51,3 @@ app.get("/student-grade", async (req, res) => {
 app.listen(app.get("port"), () => {
   console.log("Express server started on port", app.get("port"));
 });
-
