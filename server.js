@@ -28,7 +28,7 @@ app.post("/webhook", (req, res) => {
   if (!req.body) return res.sendStatus(400);
 
   res.setHeader("Content-Type", "application/json");
-
+  console.log(req.body);
   var intentName = req.body.result.metadata.intentName;
   if (intentName == "getGradeForCLass") {
     return res.json({
