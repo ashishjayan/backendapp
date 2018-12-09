@@ -39,7 +39,7 @@ app.post("/webhook", (req, res) => {
 
   res.setHeader("Content-Type", "application/json");
 
-  console.log(req.body.metadata.intentName);
+  console.log(req.body.result.metadata.intentName);
   return res.json({
     speech: "luces apagadas",
     displayText: "luces apagadas",
