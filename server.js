@@ -30,12 +30,13 @@ app.post("/webhook", (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
   var intentName = req.body.result.metadata.intentName;
-  if (intentName === "getGradeForCLass")
+  if (intentName == "getGradeForCLass") {
     return res.json({
       speech: "luces apagadas",
       displayText: "luces apagadas",
       source: "webhook-echo-sample"
     });
+  }
 });
 
 app.get("/student-grade", async (req, res) => {
